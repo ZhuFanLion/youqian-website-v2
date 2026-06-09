@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 /* ========================================
-   COIN AI V2 — YUUY-Inspired Premium Site
-   High-Impact Brand Website
+   COIN AI V2 — Mobile-First YUUY Design
    ======================================== */
 
 @theme inline {
@@ -35,24 +34,24 @@
   /* Typography */
   --font-sans: "Inter", "Noto Sans SC", system-ui, -apple-system, sans-serif;
   --font-display: "Inter", "Noto Sans SC", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
   /* Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
 }
 
 /* ========================================
-   Base
+   Base — Mobile First
    ======================================== */
 
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -100,44 +99,44 @@ body {
 }
 
 /* ========================================
-   Hero Typography
+   Mobile-First Typography
    ======================================== */
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 7vw, 5.5rem);
-  font-weight: 600;
+  font-size: clamp(2.2rem, 10vw, 5rem);
+  font-weight: 700;
   line-height: 1.05;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   color: var(--color-text);
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  line-height: 1.6;
+  font-size: clamp(0.938rem, 2.5vw, 1.125rem);
+  line-height: 1.7;
   color: var(--color-text-secondary);
   max-width: 520px;
 }
 
 .section-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-text-tertiary);
 }
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4vw, 3rem);
-  font-weight: 600;
+  font-size: clamp(1.5rem, 6vw, 2.75rem);
+  font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: var(--color-text);
 }
 
 /* ========================================
-   Buttons
+   Buttons — Touch-Friendly (min 44px)
    ======================================== */
 
 .btn-fill {
@@ -145,17 +144,19 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 32px;
+  min-height: 48px;
+  padding: 12px 28px;
   border-radius: 9999px;
   background: var(--color-fill);
   color: var(--color-fill-inverse);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.01em;
   border: none;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-fill:hover {
@@ -164,7 +165,7 @@ body {
 }
 
 .btn-fill:active {
-  transform: scale(0.98) translateY(0);
+  transform: scale(0.97) translateY(0);
 }
 
 .btn-outline {
@@ -172,17 +173,19 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 32px;
+  min-height: 48px;
+  padding: 12px 28px;
   border-radius: 9999px;
   background: transparent;
   color: var(--color-text);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.01em;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   cursor: pointer;
   text-decoration: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-outline:hover {
@@ -192,47 +195,101 @@ body {
 }
 
 .btn-outline:active {
-  transform: scale(0.98) translateY(0);
+  transform: scale(0.97) translateY(0);
 }
 
 .btn-sm {
-  padding: 8px 18px;
+  min-height: 36px;
+  padding: 6px 16px;
   font-size: 13px;
 }
 
 /* ========================================
-   Glass Navigation
+   Glass Navigation — Mobile Sticky
    ======================================== */
 
 .glass-nav {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--color-border);
   transition: background 0.4s;
 }
 
 [data-theme="dark"] .glass-nav {
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(10, 10, 10, 0.88);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .glass-nav {
-    background: rgba(10, 10, 10, 0.85);
+    background: rgba(10, 10, 10, 0.88);
   }
 }
 
 /* ========================================
-   Compare Slider
+   Mobile Menu — Full Screen Slide Up
+   ======================================== */
+
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.mobile-menu-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 61;
+  background: var(--color-bg);
+  border-radius: 20px 20px 0 0;
+  padding: 24px 24px calc(24px + env(safe-area-inset-bottom));
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.mobile-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  min-height: 52px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-menu-item:last-child {
+  border-bottom: none;
+}
+
+/* ========================================
+   Compare Slider — Touch Optimized
    ======================================== */
 
 .compare-container {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   cursor: ew-resize;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: pan-y;
 }
 
 .compare-after {
@@ -265,21 +322,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
   cursor: ew-resize;
   transition: transform 0.15s;
 }
 
-.compare-slider-handle:hover {
-  transform: translate(-50%, -50%) scale(1.1);
+.compare-slider-handle:active {
+  transform: translate(-50%, -50%) scale(1.15);
 }
 
 .compare-label {
   position: absolute;
-  bottom: 16px;
-  padding: 6px 14px;
+  bottom: 12px;
+  padding: 5px 12px;
   border-radius: 9999px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.05em;
   z-index: 5;
@@ -288,13 +345,13 @@ body {
 }
 
 .compare-label-before {
-  left: 16px;
+  left: 12px;
   background: rgba(0,0,0,0.6);
   color: #fff;
 }
 
 .compare-label-after {
-  right: 16px;
+  right: 12px;
   background: rgba(255,255,255,0.8);
   color: #1A1A1A;
 }
@@ -305,52 +362,39 @@ body {
 }
 
 /* ========================================
-   Feature Cards
+   Feature Cards — Mobile Stack
    ======================================== */
 
 .feature-card {
   position: relative;
-  padding: 32px;
-  border-radius: var(--radius-xl);
+  padding: 24px;
+  border-radius: var(--radius-lg);
   background: var(--color-bg-soft);
   border: 1px solid var(--color-border);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
-.feature-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.02) 100%);
-  opacity: 0;
-  transition: opacity 0.3s;
+@media (min-width: 768px) {
+  .feature-card {
+    padding: 32px;
+  }
 }
 
 .feature-card:hover {
   border-color: var(--color-border-hover);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
-}
-
-.feature-card:hover::before {
-  opacity: 1;
 }
 
 [data-theme="dark"] .feature-card:hover {
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
-[data-theme="dark"] .feature-card::before {
-  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.02) 100%);
-}
-
 /* ========================================
-   Image Card
+   Image Card — Mobile 2-col
    ======================================== */
 
 .image-card {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--color-bg-soft);
   border: 1px solid var(--color-border);
@@ -358,24 +402,18 @@ body {
   cursor: pointer;
 }
 
-.image-card:hover {
-  border-color: var(--color-border-hover);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.08);
-}
-
-[data-theme="dark"] .image-card:hover {
-  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+.image-card:active {
+  transform: scale(0.98);
 }
 
 /* ========================================
-   Stats Counter Animation
+   Stats Counter
    ======================================== */
 
 .stat-number {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--color-text);
@@ -388,9 +426,9 @@ body {
 
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.visible {
@@ -398,10 +436,10 @@ body {
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
 
 /* ========================================
    Marquee
@@ -414,7 +452,7 @@ body {
 
 .marquee-track {
   display: flex;
-  animation: marquee 30s linear infinite;
+  animation: marquee 25s linear infinite;
   width: max-content;
 }
 
@@ -434,19 +472,21 @@ body {
 }
 
 /* ========================================
-   Input
+   Input — Touch Friendly
    ======================================== */
 
 .input-field {
   width: 100%;
+  min-height: 48px;
   padding: 12px 16px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   background: var(--color-bg-soft);
   color: var(--color-text);
-  font-size: 14px;
+  font-size: 16px; /* prevent iOS zoom */
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
 }
 
 .input-field:focus {
@@ -458,13 +498,18 @@ body {
   color: var(--color-text-tertiary);
 }
 
+textarea.input-field {
+  min-height: 120px;
+  resize: vertical;
+}
+
 /* ========================================
    Scrollbar
    ======================================== */
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
 
 /* ========================================
@@ -481,7 +526,7 @@ body {
 }
 
 /* ========================================
-   Grain Texture Overlay (Premium Feel)
+   Grain Texture Overlay
    ======================================== */
 
 .grain-overlay {
@@ -489,12 +534,54 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.025;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 128px 128px;
 }
 
 [data-theme="dark"] .grain-overlay {
-  opacity: 0.03;
+  opacity: 0.025;
+}
+
+/* ========================================
+   Mobile Spacing Utility
+   ======================================== */
+
+.section-gap {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+@media (min-width: 768px) {
+  .section-gap {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-gap {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+}
+
+/* ========================================
+   Mobile Hero Full Bleed
+   ======================================== */
+
+.hero-mobile-full {
+  min-height: 100svh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+@media (min-width: 768px) {
+  .hero-mobile-full {
+    padding-top: 80px;
+  }
 }

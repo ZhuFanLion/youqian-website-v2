@@ -5,13 +5,14 @@ import {
   Home as HomeIcon,
   LayoutGrid,
   Image,
-  Wand2,
   ZoomIn,
   Video,
-  Palette,
   Shirt,
   ShoppingBag,
   Lightbulb,
+  Move,
+  FolderOpen,
+  Smile,
   ChevronRight,
   Menu,
   X,
@@ -19,24 +20,45 @@ import {
   Play,
   ChevronLeft,
   ChevronDown,
-  User,
-  Sparkles,
   Zap,
+  User,
 } from "lucide-react";
 
-/* ─── Sidebar Nav Data ─── */
-const sidebarNav = [
+/* ─── Sidebar Nav Data (Hierarchical) ─── */
+interface NavChild {
+  icon: React.ComponentType<any>;
+  label: string;
+}
+
+interface NavItem {
+  icon: React.ComponentType<any>;
+  label: string;
+  active?: boolean;
+  children?: NavChild[];
+}
+
+const sidebarNav: NavItem[] = [
   { icon: HomeIcon, label: "首页", active: true },
-  { icon: LayoutGrid, label: "模板社区", active: false },
-  { icon: Image, label: "图库", active: false },
-  { icon: Wand2, label: "图片创作", active: false },
-  { icon: ZoomIn, label: "高清放大", active: false },
-  { icon: Video, label: "视频创作", active: false },
-  { icon: Palette, label: "AI图案设计", active: false },
-  { icon: Shirt, label: "AI服装电商", active: false },
-  { icon: ShoppingBag, label: "AI电商", active: false },
-  { icon: Lightbulb, label: "提示词生成", active: false },
-  { icon: Sparkles, label: "全部工具", active: false },
+  {
+    icon: Image,
+    label: "AI生图",
+    children: [
+      { icon: Shirt, label: "模特换装" },
+      { icon: ZoomIn, label: "一键高清" },
+      { icon: Move, label: "姿势裂变" },
+      { icon: Smile, label: "捏脸模特" },
+      { icon: ShoppingBag, label: "电商平台" },
+    ],
+  },
+  {
+    icon: Video,
+    label: "AI创作视频",
+    children: [
+      { icon: LayoutGrid, label: "模板库" },
+      { icon: Lightbulb, label: "创意中心" },
+      { icon: FolderOpen, label: "我的素材" },
+    ],
+  },
 ];
 
 /* ─── Hero Slides ─── */
@@ -124,6 +146,14 @@ export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
   const [tplCat1, setTplCat1] = useState(0);
   const [tplCat2, setTplCat2] = useState(0);
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({
+    "AI生图": true,
+    "AI创作视频": false,
+  });
+
+  const toggleExpand = (label: string) => {
+    setExpanded((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
 
   // Auto-rotate hero
   useEffect(() => {
@@ -217,20 +247,53 @@ export default function Home() {
               </div>
             </div>
             {sidebarNav.map((item) => (
-              <div
-                key={item.label}
-                className={`mobile-drawer-item ${item.active ? "active" : ""}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <item.icon size={18} strokeWidth={1.5} />
-                {item.label}
+              <div key={item.label}>
+                {item.children ? (
+                  <>
+                    <div
+                      className="mobile-drawer-item"
+                      onClick={() => toggleExpand(item.label)}
+                    >
+                      <item.icon size={18} strokeWidth={1.5} />
+                      {item.label}
+                      <ChevronDown
+                        size={16}
+                        className="ml-auto transition-transform duration-200"
+                        style={{
+                          transform: expanded[item.label] ? "rotate(180deg)" : "rotate(0deg)",
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="overflow-hidden transition-all duration-250"
+                      style={{
+                        maxHeight: expanded[item.label] ? "300px" : "0px",
+                        opacity: expanded[item.label] ? 1 : 0,
+                      }}
+                    >
+                      {item.children.map((child) => (
+                        <div
+                          key={child.label}
+                          className="mobile-drawer-item pl-12"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <child.icon size={16} strokeWidth={1.5} />
+                          {child.label}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div
+                    className={`mobile-drawer-item ${item.active ? "active" : ""}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <item.icon size={18} strokeWidth={1.5} />
+                    {item.label}
+                  </div>
+                )}
               </div>
             ))}
-            <div className="h-px bg-white/10 my-2 mx-5" />
-            <div className="mobile-drawer-item">
-              <User size={18} strokeWidth={1.5} />
-              关于我们
-            </div>
           </div>
         </>
       )}
@@ -246,23 +309,40 @@ export default function Home() {
           </div>
         </div>
         {sidebarNav.map((item) => (
-          <div
-            key={item.label}
-            className={`sidebar-item ${item.active ? "active" : ""}`}
-          >
-            <span className="sidebar-item-icon">
-              <item.icon size={18} strokeWidth={1.5} />
-            </span>
-            {item.label}
+          <div key={item.label}>
+            {item.children ? (
+              <>
+                <div
+                  className={`sidebar-parent-header ${expanded[item.label] ? "expanded" : ""}`}
+                  onClick={() => toggleExpand(item.label)}
+                >
+                  <span className="sidebar-item-icon">
+                    <item.icon size={18} strokeWidth={1.5} />
+                  </span>
+                  {item.label}
+                  <ChevronDown size={16} className="sidebar-chevron" />
+                </div>
+                <div className={`sidebar-children ${expanded[item.label] ? "open" : ""}`}>
+                  {item.children.map((child) => (
+                    <div key={child.label} className="sidebar-child-item">
+                      <span className="sidebar-item-icon">
+                        <child.icon size={16} strokeWidth={1.5} />
+                      </span>
+                      {child.label}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className={`sidebar-item ${item.active ? "active" : ""}`}>
+                <span className="sidebar-item-icon">
+                  <item.icon size={18} strokeWidth={1.5} />
+                </span>
+                {item.label}
+              </div>
+            )}
           </div>
         ))}
-        <div className="sidebar-divider" />
-        <div className="sidebar-item">
-          <span className="sidebar-item-icon">
-            <User size={18} strokeWidth={1.5} />
-          </span>
-          关于我们
-        </div>
       </aside>
 
       {/* ═══════ Main Content ═══════ */}

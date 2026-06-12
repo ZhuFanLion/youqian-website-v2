@@ -31,3 +31,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# deploy temp files
+deploy-package/
+deploy-package.tar.gz
+tmp_deploy/
+nul

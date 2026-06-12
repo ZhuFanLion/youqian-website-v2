@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import Logo from "@/components/Logo";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Home as HomeIcon,
   Image,
@@ -285,6 +287,7 @@ const pricingPlans = [
 
 /* ─── Component ─── */
 export default function Home() {
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
   const [tplCat1, setTplCat1] = useState(0);
@@ -349,9 +352,25 @@ export default function Home() {
           <button className="btn-ghost text-xs px-3 py-1.5 min-h-0 h-8 hidden sm:inline-flex">
             更新公告
           </button>
-          <a href="/beta" className="btn-primary text-xs px-4 py-1.5 min-h-0 h-8">
-            申请内测
-          </a>
+          {user ? (
+            <>
+              <Link href="/recharge" className="btn-ghost text-xs px-3 py-1.5 min-h-0 h-8 hidden sm:inline-flex">
+                充值
+              </Link>
+              <Link href="/dashboard" className="btn-primary text-xs px-4 py-1.5 min-h-0 h-8">
+                控制台
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="btn-ghost text-xs px-3 py-1.5 min-h-0 h-8">
+                登录
+              </Link>
+              <Link href="/beta" className="btn-primary text-xs px-4 py-1.5 min-h-0 h-8">
+                申请内测
+              </Link>
+            </>
+          )}
         </div>
       </header>
 
@@ -404,8 +423,21 @@ export default function Home() {
                 )}
               </div>
             ))}
-            <div className="px-5 mt-4">
-              <a href="/beta" className="btn-primary w-full justify-center">申请内测 <ArrowRight size={14} /></a>
+            <div className="px-5 mt-4 space-y-2">
+              {user ? (
+                <Link href="/dashboard" className="btn-primary w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
+                  进入控制台 <ArrowRight size={14} />
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login" className="btn-ghost w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
+                    登录
+                  </Link>
+                  <Link href="/beta" className="btn-primary w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
+                    申请内测 <ArrowRight size={14} />
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </>
